@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arcadia — Free Web Games</title>
+  <meta name="description" content="Play classic web games for free: Snake, Tic-Tac-Toe, and Memory Match. No signup. Works on mobile." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎮</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="nav container">
+      <div class="brand" role="banner">
+        <div class="logo" aria-hidden="true">🎮</div>
+        <div>Arcadia</div>
+      </div>
+      <div class="grow"></div>
+      <label class="pill" title="Display name for leaderboard">
+        <span>👤</span>
+        <input id="displayName" placeholder="Nickname" style="background:transparent;border:0;outline:none;color:var(--text)" />
+      </label>
+      <button class="btn btn-outline" id="shareSite" title="Share this site">Share</button>
+      <button class="btn" id="playNow" type="button">Play Now</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card">
+        <div class="content">
+          <div class="pill">No ads • No signup • Works offline</div>
+          <h1 style="font-size: clamp(28px, 4vw, 44px); margin:.4em 0 .2em">Play classic web games, together</h1>
+          <p class="muted" style="font-size: 15px; line-height:1.6">Welcome to <strong>Arcadia</strong> — a tiny, fast game hub featuring Snake, Tic‑Tac‑Toe, and Memory Match. Track high scores on your device, share wins, and have fun. Built with vanilla HTML/CSS/JS so you can host it anywhere.</p>
+          <div class="kpis" style="margin-top:16px">
+            <div class="kpi">⚡ Instant load</div>
+            <div class="kpi">📱 Mobile friendly</div>
+            <div class="kpi">🔒 Private scores (local)</div>
+          </div>
+          <div style="margin-top:18px" class="tabs" role="tablist" aria-label="Main tabs">
+            <button class="tab active" role="tab" aria-selected="true" data-tab="games" aria-controls="panel-games">Games</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="leaderboard" aria-controls="panel-leaderboard">Leaderboard</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="about" aria-controls="panel-about">About</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" aria-live="polite">
+        <div class="content" id="panel-games">
+          <h2 style="margin-top:0">Pick a game</h2>
+          <div class="grid games">
+            <div class="game-card card" data-open="snake">
+              <header>🐍 Snake</header>
+              <div class="content">
+                Classic grid snake. Eat apples. Don’t hit walls.
+              </div>
+              <div class="actions">
+                <button class="btn" data-open="snake">Play</button>
+                <button class="btn btn-outline" data-how="snake">How to play</button>
+              </div>
+            </div>
+            <div class="game-card card" data-open="ttt">
+              <header>❌⭘ Tic‑Tac‑Toe</header>
+              <div class="content">1 player or hot‑seat. Best of 1.</div>
+              <div class="actions">
+                <button class="btn" data-open="ttt">Play</button>
+                <button class="btn btn-outline" data-how="ttt">How to play</button>
+              </div>
+            </div>
+            <div class="game-card card" data-open="memory">
+              <header>🃏 Memory Match</header>
+              <div class="content">Flip & match pairs. Fewer moves = better.</div>
+              <div class="actions">
+                <button class="btn" data-open="memory">Play</button>
+                <button class="btn btn-outline" data-how="memory">How to play</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content hidden" id="panel-leaderboard">
+          <h2 style="margin:0 0 6px">Leaderboard (this device)</h2>
+          <p class="muted" style="margin-top:0">Scores are stored privately in your browser. Set a nickname at the top.</p>
+          <div id="lbWrap"></div>
+        </div>
+        <div class="content hidden" id="panel-about">
+          <h2 style="margin-top:0">About Arcadia</h2>
+          <p>Arcadia is a single‑file, static website. You can host it for free on GitHub Pages, Netlify, or any static host. No trackers, no ads, just games. Built to be forked.</p>
+          <ul>
+            <li>Performant: pure JS, no frameworks</li>
+            <li>Accessible: keyboard support, ARIA live regions</li>
+            <li>Responsive: works great on phones</li>
+          </ul>
+          <p class="muted">Tip: Press <kbd>?</kbd> in any game for help.</p>
+        </div>
+      </div>
+    </section>
+
+  <!-- GAME MODALS -->
+  <section id="modal" class="hidden" aria-hidden="true">
+      <div class="card" style="width:min(860px, 95vw)" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="content">
+          <div style="display:flex; align-items:center; gap:12px">
+            <h2 id="modalTitle" style="margin:0">Game</h2>
+            <div class="grow"></div>
+            <button class="btn btn-ghost" id="btnHelp" title="How to play">❔</button>
+            <button class="btn btn-outline" id="btnRestart" title="Restart">↻ Restart</button>
+            <button class="btn" id="btnClose" title="Close">✖ Close</button>
+          </div>
+        </div>
+        <div class="content" id="gameArea"></div>
+      </div>
+    </section>
+
+    <section class="footer muted">
+      <div>© <span id="year"></span> Arcadia. Made with ❤️ and vanilla JS. Fork and share!</div>
+    </section>
+  </main>
+
+  <template id="tpl-how-snake">
+    <ul>
+      <li>Use arrow keys or swipe to move.</li>
+      <li>Eat apples to grow. Each apple +1 point.</li>
+      <li>Avoid walls and your own tail.</li>
+    </ul>
+  </template>
+  <template id="tpl-how-ttt">
+    <ul>
+      <li>Take turns placing ❌ and ⭘ on the 3×3 grid.</li>
+      <li>First to 3 in a row wins.</li>
+      <li>Press R to restart, H for home.</li>
+    </ul>
+  </template>
+  <template id="tpl-how-memory">
+    <ul>
+      <li>Flip two cards per turn to find a match.</li>
+      <li>Clear all pairs in the fewest moves.</li>
+      <li>Tap/Click cards or use keyboard focus.</li>
+    </ul>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

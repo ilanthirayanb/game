@@ -1,0 +1,82 @@
+:root{
+  --bg: #0b1020;
+  --panel: #121931;
+  --accent: #7c6cff;
+  --accent-2: #45d19e;
+  --text: #eef3ff;
+  --muted: #a9b1c7;
+  --danger:#ff5d73;
+  --ok:#3bd671;
+  --shadow: 0 10px 30px rgb(0 0 0 / 0.25);
+  --radius: 16px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  color:var(--text); background:linear-gradient(180deg,#090e1c, #0b1020 50%, #0e1428);
+  background-attachment: fixed;
+}
+a{color:inherit}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+header{position:sticky; top:0; z-index:10; background:linear-gradient(180deg, rgba(11,16,32,.95), rgba(11,16,32,.75)); backdrop-filter:saturate(140%) blur(8px); border-bottom:1px solid #1c2444}
+.nav{display:flex; align-items:center; gap:16px; padding:14px 24px}
+.brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.3px}
+.brand .logo{width:36px;height:36px;display:grid;place-items:center;background:radial-gradient(65% 65% at 35% 35%, #9b93ff, #6a5cff); border-radius:12px; box-shadow: var(--shadow)}
+.grow{flex:1}
+.btn{background: var(--accent); border:0; color:white; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; box-shadow: 0 6px 18px rgba(124,108,255,.35); transition: transform .08s ease, opacity .2s ease}
+.btn:hover{transform: translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid #2a335a; color:var(--text)}
+.btn-ghost{background:transparent;border:0;color:var(--muted)}
+.grid{display:grid; gap:20px}
+.hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:24px; align-items:center; padding:24px}
+.card{background:linear-gradient(180deg, #0e1530, #0c1227); border:1px solid #222a4a; border-radius:var(--radius); box-shadow:var(--shadow)}
+.card .content{padding:24px}
+.muted{color:var(--muted)}
+.pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:#131a34; border:1px solid #233160; border-radius:999px; font-size:12px; color:#b9c2df}
+.kpis{display:flex; gap:16px; flex-wrap:wrap}
+.kpi{flex:1; min-width:160px; padding:16px; border-radius:14px; border:1px dashed #2a375f}
+.games{grid-template-columns: repeat(3, 1fr)}
+.game-card{display:flex; flex-direction:column}
+.game-card header{padding:16px; border-bottom:1px solid #222a4a}
+.game-card .actions{display:flex; gap:8px; padding:16px}
+.footer{opacity:.7; padding:40px 24px; text-align:center}
+.hidden{display:none}
+.tabs{display:flex; gap:8px; flex-wrap:wrap}
+.tab{padding:8px 12px; border-radius:10px; border:1px solid #22305a; cursor:pointer}
+.tab.active{background: #1a2141}
+
+/* Tic Tac Toe */
+.ttt{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; width:min(360px, 90vw); margin:auto}
+.ttt button{aspect-ratio:1 / 1; font-size:42px; font-weight:800; border-radius:14px; border:1px solid #2a335a; background:#151b35; color:var(--text); cursor:pointer}
+.ttt button.win{background: #143c2d; border-color:#1a6d53}
+
+/* Memory */
+.memory{display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; width:min(420px, 95vw); margin:auto}
+.card-mem{position:relative; aspect-ratio: 1 / 1; perspective: 800px}
+.card-mem .face{position:absolute; inset:0; display:grid; place-items:center; font-size:28px; border:1px solid #2a335a; border-radius:14px; background:#151b35; backface-visibility:hidden; transition: transform .5s}
+.card-mem .back{transform: rotateY(0deg)}
+.card-mem .front{transform: rotateY(180deg)}
+.card-mem.flipped .back{transform: rotateY(-180deg)}
+.card-mem.flipped .front{transform: rotateY(0deg)}
+.card-mem.matched .face{background:#132e22; border-color:#1a6d53}
+
+/* Snake */
+.snake-wrap{display:grid; place-items:center}
+canvas#snake{background: #0b0f22; border:1px solid #22305a; border-radius:12px; box-shadow: inset 0 0 0 1px #0e1740}
+
+/* Leaderboard */
+table{width:100%; border-collapse:collapse}
+th, td{padding:10px 12px; border-bottom:1px solid #1f294f; text-align:left}
+tbody tr:hover{background:#12193a}
+
+@media (max-width:980px){
+  .hero{grid-template-columns: 1fr}
+  .games{grid-template-columns: 1fr 1fr}
+}
+@media (max-width:640px){
+  .games{grid-template-columns: 1fr}
+}
+
+/* Modal placement and backdrop — keep display controlled by the .hidden class */
+#modal{position:fixed; inset:0; display:grid; place-items:center; background: rgba(5,8,18,.6); backdrop-filter: blur(4px)}
